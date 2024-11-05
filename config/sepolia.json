@@ -1,0 +1,9 @@
+{
+  "network": "sepolia",
+  "FlexibleStaking": "0x4035670e45f04b649f3ae7e4f9fc579261a18d22",
+  "FlexibleStakingTimestamp": "6975141",
+  "FixedStaking": "0x1c68b66261AdDFE388969EB6C44641DfD995D52f",
+  "FixedStakingTimestamp": "6975253",
+  "Noob": "0x7866fbB00a197d5abab0aB666F045C2caA879ffC",
+  "NoobTimestamp": "6530000"
+}

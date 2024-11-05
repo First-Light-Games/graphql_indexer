@@ -1,0 +1,89 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FlexibleStaking
+    network: {{network}}
+    source:
+      address: "{{FlexibleStaking}}"
+      abi: FlexibleStaking
+      startBlock: {{FlexibleStakingTimestamp}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AprUpdated
+        - Token
+        - Account
+        - AccountBalance
+        - FlexibleStakingInfo
+        - FixedStakingInfo
+        - FlexibleStakeHistory
+        - FixedStakeHistory
+      abis:
+        - name: FlexibleStaking
+          file: ./abis/FlexibleStaking.json
+      eventHandlers:
+        - event: AprUpdated(uint256)
+          handler: handleAprUpdated
+        - event: Claimed(indexed address,uint256)
+          handler: handleClaimed
+        - event: Staked(indexed address,uint256)
+          handler: handleStaked
+        - event: Unstaked(indexed address,uint256)
+          handler: handleUnstaked
+      file: ./src/flexible-staking.ts
+  - kind: ethereum
+    name: FixedStaking
+    network: {{network}}
+    source:
+      address: "{{FixedStaking}}"
+      abi: FixedStaking
+      startBlock: {{FixedStakingTimestamp}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Token
+        - Account
+        - AccountBalance
+        - FlexibleStakingInfo
+        - FixedStakingInfo
+        - FlexibleStakeHistory
+        - FixedStakeHistory
+      abis:
+        - name: FixedStaking
+          file: ./abis/FixedStaking.json
+      eventHandlers:
+        - event: Claimed(indexed address,uint256,uint8,uint256)
+          handler: handleClaimed
+        - event: Staked(indexed address,uint256,uint8,uint256)
+          handler: handleStaked
+        - event: Unstaked(indexed address,uint256,uint8,uint256)
+          handler: handleUnstaked
+      file: ./src/fixed-staking.ts
+  - kind: ethereum
+    name: Noob
+    network: {{network}}
+    source:
+      address: "{{Noob}}"
+      abi: ERC20
+      startBlock: {{NoobTimestamp}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TransferEvent
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/token.ts
