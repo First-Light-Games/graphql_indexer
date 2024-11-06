@@ -54,6 +54,105 @@ type Token @entity {
   holdersBalance: [AccountBalance!]! @derivedFrom(field: "token")
 }
 
+#############################
+####### Token Metadata ######
+#############################
+
+type ERC721Token @entity {
+  " Address of the token, { Contract Address }-{ Token ID }  "
+  id: Bytes!
+
+  " Collection for the token "
+  collection: Collection!
+
+  " ID of the token from the collection "
+  tokenID: BigInt!
+
+  " URI of the token "
+  tokenURI: String
+
+  " The owner for the token "
+  owner: Account!
+
+  " Timestamp of the token's mint "
+  mintTime: BigInt!
+
+  " Timestamp of the token's last updated timestamp "
+  lastUpdatedTime: BigInt!
+}
+
+#########################################
+####### ERC721 Collection Metadata ######
+#########################################
+
+type Collection @entity {
+  " ERC721 collection address "
+  id: Bytes!
+
+  " Name of the collection "
+  name: String
+
+  " Symbol of the collection "
+  symbol: String
+
+  " Flag for whether ERC721 metadata is supported "
+  supportsERC721Metadata: Boolean!
+
+  " Total number of unique minted tokens in the collection "
+  tokenCount: BigInt!
+
+  " Total number of unique token owners holding tokens in the collection "
+  ownerCount: BigInt!
+
+  " Total number of token transfer events "
+  transferCount: BigInt!
+
+  " Tokens in the collection "
+  tokens: [ERC721Token!]! @derivedFrom(field: "collection")
+
+  " List of token transfers "
+  transfers: [ERC721Transfer!]! @derivedFrom(field: "collection")
+
+  " Token holder's balance "
+  holdersBalance: [ERC721AccountBalance!]! @derivedFrom(field: "collection")
+}
+
+######################################
+##### ERC721 Transfer Event Data #####
+######################################
+
+type ERC721Transfer @entity {
+  " { Contract ID }-{ Transaction hash }-{ Log index } "
+  id: Bytes!
+
+  " Transaction hash of the transaction that emitted this event "
+  hash: Bytes!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " The ERC721 Collection this event belongs to "
+  collection: Collection!
+
+  " Nonce of the transaction that emitted this event "
+  nonce: Int!
+
+  " ID of the token transferred "
+  tokenId: BigInt!
+
+  " Account that received the tokens "
+  to: Account!
+
+  " Account that sent the tokens "
+  from: Account!
+
+  " Block number of this event "
+  blockNumber: BigInt!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+}
+
 ##################################
 ##### Event-Level Data #####
 ##################################
@@ -63,7 +162,7 @@ interface Event {
   id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
-  hash: String!
+  hash: Bytes!
 
   " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
   logIndex: Int!
@@ -92,7 +191,7 @@ type TransferEvent implements Event @entity {
   id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
-  hash: String!
+  hash: Bytes!
 
   " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
   logIndex: Int!
@@ -128,6 +227,21 @@ type Account @entity {
   " Address of the account "
   id: Bytes!
 
+  " Total number of unique tokens that this account holds "
+  tokenCount: BigInt!
+
+  " Tokens that this account holds "
+  tokens: [ERC721Token!]! @derivedFrom(field: "owner")
+
+  " Token balances that this account holds "
+  erc721balances: [ERC721AccountBalance!]! @derivedFrom(field: "account")
+
+  " Token transfers to this account "
+  transferTo: [ERC721Transfer!]! @derivedFrom(field: "to")
+
+  " Token transfers from this account "
+  transferFrom: [ERC721Transfer!]! @derivedFrom(field: "from")
+
   " Token balances that this account holds "
   balances: [AccountBalance!]! @derivedFrom(field: "account")
 
@@ -142,6 +256,26 @@ type Account @entity {
 
   " Fixed Staking Info "
   fixedStakingInfo: [FixedStakingInfo!]! @derivedFrom(field: "account")
+}
+
+type ERC721AccountBalance @entity {
+  " { Address Of the Account }-{ Address of the Collection }"
+  id: Bytes!
+
+  " Account address "
+  account: Account!
+
+  " Collection address "
+  collection: Collection!
+
+  " Current token amount for the collection "
+  tokenCount: BigInt!
+
+  " Block number in which the balance was last modified "
+  blockNumber: BigInt!
+
+  " Timestamp in which the balance was last modified "
+  timestamp: BigInt!
 }
 
 type AccountBalance @entity {

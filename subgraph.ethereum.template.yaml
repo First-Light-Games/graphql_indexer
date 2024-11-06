@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: Corpos
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0xE777e038BfDF4773B9d39Fc42ddA4e74f7386BaD"
+      address: "{{Corpos}}"
       abi: ERC721
-      startBlock: 20068756
+      startBlock: {{CorposTimestamp}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -26,11 +26,11 @@ dataSources:
       file: ./src/collection.ts
   - kind: ethereum
     name: Gamers
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0xde76ad8998310dd4c6ca9fdb03a5f20bbf01ce96"
+      address: "{{Gamers}}"
       abi: ERC721
-      startBlock: 19524912
+      startBlock: {{GamersTimestamp}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -46,11 +46,11 @@ dataSources:
       file: ./src/collection.ts
   - kind: ethereum
     name: Noob
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0x06561dC5CEdCc012a4EA68609b17d41499622E4c"
+      address: "{{Noob}}"
       abi: ERC20
-      startBlock: 20641476
+      startBlock: {{NoobTimestamp}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

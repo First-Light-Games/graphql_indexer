@@ -1,0 +1,13 @@
+{
+  "network": "mainnet",
+  "FlexibleStaking": "0x4035670e45f04b649f3ae7e4f9fc579261a18d22",
+  "FlexibleStakingTimestamp": "",
+  "FixedStaking": "0x1c68b66261AdDFE388969EB6C44641DfD995D52f",
+  "FixedStakingTimestamp": "",
+  "Corpos": "0xE777e038BfDF4773B9d39Fc42ddA4e74f7386BaD",
+  "CorposTimestamp": "20068756",
+  "Gamers": "0xde76ad8998310dd4c6ca9fdb03a5f20bbf01ce96",
+  "GamersTimestamp": "19524912",
+  "Noob": "0x06561dC5CEdCc012a4EA68609b17d41499622E4c",
+  "NoobTimestamp": "20641476"
+}

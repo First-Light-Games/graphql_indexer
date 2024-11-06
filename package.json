@@ -4,7 +4,9 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "prepare:sepolia": "mustache config/sepolia.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:ethereum": "mustache config/ethereum.json subgraph.ethereum.template.yaml > subgraph.yaml",
+    "deploy:ethereum": "yarn prepare:ethereum && yarn codegen && yarn build && graph deploy --version-label v0.0.8 --studio flg-ethereum",
+    "prepare:sepolia": "mustache config/sepolia.json subgraph.staking.template.yaml > subgraph.yaml",
     "deploy:sepolia": "yarn prepare:sepolia && yarn codegen && yarn build && graph deploy --version-label v0.0.7 --studio flg-indexer"
   },
   "dependencies": {

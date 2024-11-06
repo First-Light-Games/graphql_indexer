@@ -167,7 +167,7 @@ function handleTransferEvent(
   let transferEvent = new TransferEvent(
     Bytes.fromHexString(event.address.toHex()).concat(Bytes.fromUTF8("-")).concat(Bytes.fromHexString(event.transaction.hash.toHex())).concatI32(event.logIndex.toI32())
   );
-  transferEvent.hash = event.transaction.hash.toHex();
+  transferEvent.hash = event.transaction.hash;
   transferEvent.logIndex = event.logIndex.toI32();
   transferEvent.token = Bytes.fromHexString(event.address.toHex());
   transferEvent.nonce = event.transaction.nonce.toI32();

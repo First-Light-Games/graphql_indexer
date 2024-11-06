@@ -3,6 +3,7 @@ import { Bytes, BigInt } from "@graphprotocol/graph-ts";
 import {
   Account,
   AccountBalance,
+  ERC721AccountBalance,
   Token,
 } from "../generated/schema";
 
@@ -28,8 +29,28 @@ export function getOrCreateAccount(accountAddress: Bytes): Account {
   }
 
   let newAccount = new Account(accountId);
+  newAccount.tokenCount = BIGINT_ZERO;
 
   return newAccount;
+}
+
+export function getOrCreateERC721AccountBalance(
+  account: Bytes,
+  collection: Bytes
+): ERC721AccountBalance {
+  let balanceId = account.concat(Bytes.fromUTF8("-")).concat(collection);
+  let previousBalance = ERC721AccountBalance.load(balanceId);
+
+  if (previousBalance != null) {
+    return previousBalance as ERC721AccountBalance;
+  }
+
+  let newBalance = new ERC721AccountBalance(balanceId);
+  newBalance.account = account;
+  newBalance.collection = collection;
+  newBalance.tokenCount = BIGINT_ZERO;
+
+  return newBalance;
 }
 
 export function getOrCreateAccountBalance(
