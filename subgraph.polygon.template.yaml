@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: Corpos
-    network: matic
+    network: {{network}}
     source:
-      address: "0xaE14E29C4b59D072507640E72151DAd1BF5Fe295"
+      address: "{{Corpos}}"
       abi: ERC721
-      startBlock: 40773711
+      startBlock: {{CorposTimestamp}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
