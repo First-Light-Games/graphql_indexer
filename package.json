@@ -8,6 +8,8 @@
     "deploy:ethereum": "yarn prepare:ethereum && yarn codegen && yarn build && graph deploy --version-label v0.0.8 --studio flg-ethereum",
     "prepare:polygon": "mustache config/polygon.json subgraph.polygon.template.yaml > subgraph.yaml",
     "deploy:polygon": "yarn prepare:polygon && yarn codegen && yarn build && graph deploy --version-label v0.0.1 --studio flg-polygon",
+    "prepare:imx": "mustache config/imx.json subgraph.imx.template.yaml > subgraph.yaml",
+    "deploy:imx": "yarn prepare:imx && yarn codegen && yarn build && goldsky subgraph deploy flg-imx/0.0.1 --path .",
     "prepare:sepolia": "mustache config/sepolia.json subgraph.staking.template.yaml > subgraph.yaml",
     "deploy:sepolia": "yarn prepare:sepolia && yarn codegen && yarn build && graph deploy --version-label v0.0.7 --studio flg-indexer"
   },
